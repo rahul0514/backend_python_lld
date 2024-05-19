@@ -7,13 +7,21 @@ from ecomdemo.models import User, Products
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    fields = ['username', 'name', 'email']
+    fields = ['title', 'username', 'name', 'email']
     list_display = ['id', 'username', 'name']
     search_fields = ['id', 'name']
 
+
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
-    fields = [ 'name', 'description', 'price', 'stock']
+    # fields = ['seller', 'name', 'description', 'price', 'stock']
     list_display = ['id', 'name', 'price']
     search_fields = ['id']
-
+    fieldsets = (
+        ("Product Info", {
+            'fields': ('seller', 'name', 'description')
+        }), ("Stock Info", {
+            'fields': ('price', 'stock'),
+            'classes': ('collapse',)
+        })
+    )
